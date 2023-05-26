@@ -1,0 +1,60 @@
+# Enable symbolic links
+Options +FollowSymLinks
+
+# Allow PDF files to be accessed
+<FilesMatch "\.(pdf)$">
+    Header set Content-Disposition "inline"
+</FilesMatch>
+
+
+# Add support for .htaccess files
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Deny access to directories above root
+    RewriteCond %{REQUEST_URI} "/\." 
+    RewriteRule "^(.*)$" - [F]
+
+    # Rewrite URL to include /public
+    RewriteCond %{REQUEST_URI} !^/storage
+    RewriteRule ^(.*)$ public/$1 [L]
+
+
+    # Enable caching of images and CSS files
+    <FilesMatch "\.(css|jpg|jpeg|png|gif|js|pdf)$">
+        Header set Cache-Control "public, max-age=604800, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+<Files *.pdf>
+  Order allow,deny
+  Allow from all
+</Files>
+
+AddType application/pdf pdf
+
+
+
+<IfModule mod_mime.c>
+  AddType application/pdf .pdf
+  AddType font/opentype .otf
+  AddType font/truetype .ttf
+  AddType font/eot .eot
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+</IfModule>
+
