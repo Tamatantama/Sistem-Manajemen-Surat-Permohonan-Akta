@@ -12,9 +12,16 @@ Route::get('/', function () {
 });
 
 
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/surat', [SuratController::class, 'index'])->name('surat.index');
 });
+
+
+Route::post('/register/success', [UserController::class, 'registerSuccess'])->name('register.success');
+
 
 
 

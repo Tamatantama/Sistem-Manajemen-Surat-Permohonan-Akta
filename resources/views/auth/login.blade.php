@@ -7,27 +7,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
     <title>Document</title>
 </head>
 <body>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <script>
+        @if(session('register_success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful',
+                text: 'Please login with your new account',
+                timer: 5000 // Optional timer to automatically close the alert after 5 seconds
+            });
+        @endif
+    </script>
 
-        <script>
-            // Close the success message after 3 seconds
-            setTimeout(function() {
-                $('.alert-success').fadeOut('slow');
-            }, 3000);
-
-            // Redirect to login page after 3 seconds
-            setTimeout(function() {
-                window.location.href = '{{ route("login") }}';
-            }, 3000);
-        </script>
-    @endif
 
   <div class="container-login">
   <div class="card-login">

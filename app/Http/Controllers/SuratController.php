@@ -152,9 +152,12 @@ public function updateStatus(Request $request, Surat $surat)
     
 
         $request->session()->flash('success', 'Surat berhasil ditambahkan');
+        
 
 
         return redirect()->route('surat.show', ['id' => $surat->id]);
+
+       
     }
     
 
